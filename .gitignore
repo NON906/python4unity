@@ -1,0 +1,7 @@
+.DS_Store
+/Python4Unity/Library/
+/Python4Unity/Logs/
+/Python4Unity/obj/
+/Python4Unity/.vs/
+/Python4Unity/Temp/
+/Python4Unity/*.csproj

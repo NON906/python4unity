@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+**APPLY_PLUGINS**
+
+// ADD (Python4Unity)
+apply plugin: 'com.chaquo.python'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+**DEPS**}
+
+android {
+    ndkPath "**NDKPATH**"
+
+    compileSdkVersion **APIVERSION**
+    buildToolsVersion '**BUILDTOOLS**'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdkVersion **MINSDKVERSION**
+        targetSdkVersion **TARGETSDKVERSION**
+        ndk {
+            abiFilters **ABIFILTERS**
+        }
+        versionCode **VERSIONCODE**
+        versionName '**VERSIONNAME**'
+        consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    aaptOptions {
+        noCompress = **BUILTIN_NOCOMPRESS** + unityStreamingAssets.tokenize(', ')
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }**PACKAGING_OPTIONS**
+}
+**IL_CPP_BUILD_SETUP**
+**SOURCE_BUILD_SETUP**
+**EXTERNAL_SOURCES**
+
+// ADD (Python4Unity)
+chaquopy {
+    defaultConfig {
+        version "3.8"
+        buildPython("C:/Users/satoh/anaconda3/envs/unity/python.exe")
+        pip {
+            install "-r", "D:/Unity/Python4Unity/Projects/python4unity/Python4Unity/Assets/Python4Unity_Sample/Plugins/Android/requirements.txt"
+        }
+    }
+    productFlavors { }
+    //sourceSets.getByName("main") {
+    //    srcDirs = ["."]
+    //}
+}
