@@ -58,6 +58,30 @@ namespace Python4Unity
             {
                 return (T)(object)new PyObjectAndroid(input);
             }
+            else if (typeof(T).IsArray)
+            {
+                var newPyObj = new PyObjectAndroid(input);
+                var innerTypes = typeof(T).GenericTypeArguments;
+                var method = typeof(PyObjectAndroid).GetMethod("ToArray", 1, new Type[] { });
+                method = method.MakeGenericMethod(innerTypes);
+                return (T)method.Invoke(newPyObj, null);
+            }
+            else if (typeof(T).GetGenericTypeDefinition() == typeof(Dictionary<,>) || typeof(T).GetGenericTypeDefinition() == typeof(IDictionary<,>))
+            {
+                var newPyObj = new PyObjectAndroid(input);
+                var innerTypes = typeof(T).GenericTypeArguments;
+                var method = typeof(PyObjectAndroid).GetMethod("ToDictionary", 2, new Type[] { });
+                method = method.MakeGenericMethod(innerTypes);
+                return (T)method.Invoke(newPyObj, null);
+            }
+            else if (typeof(T).GetGenericTypeDefinition() == typeof(List<>) || typeof(T).GetGenericTypeDefinition() == typeof(ICollection<>))
+            {
+                var newPyObj = new PyObjectAndroid(input);
+                var innerTypes = typeof(T).GenericTypeArguments;
+                var method = typeof(PyObjectAndroid).GetMethod("ToList", 1, new Type[] { });
+                method = method.MakeGenericMethod(innerTypes);
+                return (T)method.Invoke(newPyObj, null);
+            }
             else
             {
                 return (T)(object)input;
@@ -66,55 +90,52 @@ namespace Python4Unity
 
         AndroidJavaObject parseArg(object arg)
         {
-            if (arg is KeyValuePair<string, object>)
+            AndroidJavaObject parseArray(Array array)
             {
-                KeyValuePair<string, object> castedArg = (KeyValuePair<string, object>)arg;
-                var value = castedArg.Value;
+                using var javaObjClass = new AndroidJavaClass("java.lang.Object");
+                using var javaArrayClass = new AndroidJavaClass("java.lang.Array");
+                int length = array.Length;
+                var javaArray = javaArrayClass.CallStatic<AndroidJavaObject>("newInstance", javaObjClass, length);
+                for (int loop = 0; loop < length; loop++)
+                {
+                    javaArrayClass.CallStatic("set", javaArray, loop, array.GetValue(loop));
+                }
+                return javaArray;
+            }
+
+            if (arg.GetType().Name == typeof(KeyValuePair<,>).Name)
+            {
+                var key = arg.GetType().GetProperty("Key").GetValue(arg);
+                var value = arg.GetType().GetProperty("Value").GetValue(arg);
                 if (value is PyObjectAndroid)
                 {
                     value = ((PyObjectAndroid)value).rawPyObject_;
                 }
-                var newArg = new AndroidJavaObject("com.chaquo.python.Kwarg", castedArg.Key, value);
+                var newArg = new AndroidJavaObject("com.chaquo.python.Kwarg", (string)key, value);
                 return newArg;
             }
-            /*
-            else if (arg is IDictionary<string, object>)
+            else if (arg.GetType().GetInterfaces().Any(item => item.Name == typeof(IDictionary<,>).Name))
             {
-                foreach (var pair in (IDictionary<string, object>)arg)
+                using var map = new AndroidJavaObject("java.util.HashMap");
+
+                foreach (var item in (IEnumerable)arg)
                 {
-                    var value = pair.Value;
-                    if (value is PyObjectAndroid)
-                    {
-                        value = ((PyObjectAndroid)value).rawPyObject_;
-                    }
-                    var newArg = new AndroidJavaObject("com.chaquo.python.Kwarg", pair.Key, value);
-                    newArgs.Add(newArg);
+                    var key = item.GetType().GetProperty("Key").GetValue(item).ToString();
+                    var value = item.GetType().GetProperty("Value").GetValue(item);
+
+                    map.Call("put", key, value);
                 }
+
+                using var clazz = new AndroidJavaClass("com.chaquo.python.PyObject");
+                return clazz.CallStatic<AndroidJavaObject>("fromJava", map);
             }
-            */
-            else if (arg is object[])
+            else if (arg.GetType().IsArray)
             {
-                using var javaObjClass = new AndroidJavaClass("java.lang.Object");
-                using var javaArrayClass = new AndroidJavaClass("java.lang.Array");
-                int length = ((object[])arg).Length;
-                var javaArray = javaArrayClass.CallStatic<AndroidJavaObject>("newInstance", javaObjClass, length);
-                for (int loop = 0; loop < length; loop++)
-                {
-                    javaArrayClass.CallStatic("set", javaArray, loop, ((object[])arg)[loop]);
-                }
-                return javaArray;
+                return parseArray((Array)arg);
             }
-            else if (arg is List<object>)
+            else if (arg.GetType().GetInterfaces().Any(item => item.Name == typeof(ICollection<>).Name))
             {
-                using var javaObjClass = new AndroidJavaClass("java.lang.Object");
-                using var javaArrayClass = new AndroidJavaClass("java.lang.Array");
-                int length = ((List<object>)arg).Count;
-                var javaArray = javaArrayClass.CallStatic<AndroidJavaObject>("newInstance", javaObjClass, length);
-                for (int loop = 0; loop < length; loop++)
-                {
-                    javaArrayClass.CallStatic("set", javaArray, loop, ((object[])arg)[loop]);
-                }
-                return javaArray;
+                return parseArray(arg.GetType().GetEnumValues());
             }
             else if (arg is PyObjectAndroid)
             {
@@ -162,7 +183,8 @@ namespace Python4Unity
             }
             else
             {
-                throw new Exception("Unsupported type.");
+                using var clazz = new AndroidJavaClass("com.chaquo.python.PyObject");
+                return clazz.CallStatic<AndroidJavaObject>("fromJava", arg);
             }
         }
 

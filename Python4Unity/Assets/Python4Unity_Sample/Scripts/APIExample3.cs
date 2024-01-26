@@ -18,8 +18,8 @@ namespace Python4Unity.Sample
             var hello = os.Get<IPyObject>("environ").ToDictionary<string, string>();
             hello["HELLO"] = "world";
             os.Get<IPyObject>("environ").SetFrom(hello);
-            hello = os.Get<IPyObject>("environ").ToDictionary<string, string>();
-            UnityEngine.Debug.Log(hello["HELLO"]);
+            var hello2 = os.Get<IDictionary<string, string>>("environ");
+            UnityEngine.Debug.Log(hello2["HELLO"]);
         }
     }
 }
