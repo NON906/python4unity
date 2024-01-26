@@ -12,6 +12,7 @@ namespace Python4Unity
         T Call<T>(params object[] args);
         void Put(string key, object value);
         T Get<T>(object key);
+        T ToValue<T>();
         T[] ToArray<T>();
         List<T> ToList<T>();
         Dictionary<T0, T1> ToDictionary<T0, T1>();

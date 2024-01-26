@@ -241,6 +241,11 @@ namespace Python4Unity
             return convertTo<T>(result);
         }
 
+        public T ToValue<T>()
+        {
+            return convertTo<T>(rawPyObject_);
+        }
+
         public T[] ToArray<T>()
         {
             using var javaList = rawPyObject_.Call<AndroidJavaObject>("asList");
