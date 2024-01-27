@@ -78,7 +78,7 @@ namespace Python4Unity
                     "chaquopy {\n" +
                     "    defaultConfig {\n" +
                     "        version \"" + version + "\"\n" +
-                    "        buildPython(\"" + pythonPath + "\")\n" +
+                    "        buildPython(\"" + Path.GetFullPath(pythonPath).Replace("\\", "/") + "\")\n" +
                     "        pip {\n";
                 foreach (string path in requirementsPaths)
                 {

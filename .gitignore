@@ -5,3 +5,5 @@
 /Python4Unity/.vs/
 /Python4Unity/Temp/
 /Python4Unity/*.csproj
+/Python4Unity/Assets/Python4Unity_Config.asset
+/Python4Unity/Assets/Python4Unity_Config.asset.meta
