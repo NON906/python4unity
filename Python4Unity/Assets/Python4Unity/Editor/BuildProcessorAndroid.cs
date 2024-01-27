@@ -63,8 +63,17 @@ namespace Python4Unity
             if (!contents.Contains("// ADD (Python4Unity)"))
             {
                 contents = contents.Replace("**APPLY_PLUGINS**", "**APPLY_PLUGINS**\napply plugin: 'com.chaquo.python' // ADD (Python4Unity)");
-                string pythonPath = "C:/Users/satoh/anaconda3/envs/unity/python.exe";
+
+                string pythonPath = "python";
                 string version = "3.8";
+                var guids = AssetDatabase.FindAssets("t:ConfigScriptableObject");
+                if (guids.Length > 0)
+                {
+                    var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                    var config = AssetDatabase.LoadAssetAtPath<ConfigScriptableObject>(path);
+                    pythonPath = config.PythonPath;
+                    version = config.Version;
+                }
                 string addContents = "// ADD (Python4Unity)\n" +
                     "chaquopy {\n" +
                     "    defaultConfig {\n" +
