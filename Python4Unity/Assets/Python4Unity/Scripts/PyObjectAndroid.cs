@@ -63,7 +63,14 @@ namespace Python4Unity
                 var newPyObj = new PyObjectAndroid(input);
                 var innerTypes = typeof(T).GenericTypeArguments;
                 var method = typeof(PyObjectAndroid).GetMethod("ToArray", 1, new Type[] { });
-                method = method.MakeGenericMethod(innerTypes);
+                if (innerTypes.Length > 0)
+                {
+                    method = method.MakeGenericMethod(innerTypes);
+                }
+                else
+                {
+                    method = method.MakeGenericMethod(new[] { typeof(T).GetElementType() });
+                }
                 return (T)method.Invoke(newPyObj, null);
             }
             else if (typeof(T).GetGenericTypeDefinition() == typeof(Dictionary<,>) || typeof(T).GetGenericTypeDefinition() == typeof(IDictionary<,>))
@@ -93,12 +100,12 @@ namespace Python4Unity
             AndroidJavaObject parseArray(Array array)
             {
                 using var javaObjClass = new AndroidJavaClass("java.lang.Object");
-                using var javaArrayClass = new AndroidJavaClass("java.lang.Array");
+                using var javaArrayClass = new AndroidJavaClass("java.lang.reflect.Array");
                 int length = array.Length;
                 var javaArray = javaArrayClass.CallStatic<AndroidJavaObject>("newInstance", javaObjClass, length);
                 for (int loop = 0; loop < length; loop++)
                 {
-                    javaArrayClass.CallStatic("set", javaArray, loop, array.GetValue(loop));
+                    javaArrayClass.CallStatic("set", javaArray, loop, parseArg(array.GetValue(loop)));
                 }
                 return javaArray;
             }

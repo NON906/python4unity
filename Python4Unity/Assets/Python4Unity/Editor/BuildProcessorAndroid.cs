@@ -17,6 +17,14 @@ namespace Python4Unity
         public void OnPreprocessBuild(BuildReport report)
         {
 #if UNITY_ANDROID
+            List<string> requirementsPaths = new List<string>();
+            string[] srcDirs = Directory.GetDirectories("Assets", "Python", SearchOption.AllDirectories);
+            foreach (string dir in srcDirs)
+            {
+                string[] addRequirements = Directory.GetFiles(dir, "requirements.txt", SearchOption.AllDirectories);
+                requirementsPaths.AddRange(addRequirements);
+            }
+
             if (!AssetDatabase.IsValidFolder("Assets/Plugins"))
             {
                 AssetDatabase.CreateFolder("Assets", "Plugins");
@@ -57,8 +65,30 @@ namespace Python4Unity
                 contents = contents.Replace("**APPLY_PLUGINS**", "**APPLY_PLUGINS**\napply plugin: 'com.chaquo.python' // ADD (Python4Unity)");
                 string pythonPath = "C:/Users/satoh/anaconda3/envs/unity/python.exe";
                 string version = "3.8";
-                string requirementsPath = Path.GetFullPath("Assets/requirements.txt").Replace("\\", "/");
-                string addContents = "// ADD (Python4Unity)\nchaquopy {\n    defaultConfig {\n        version \"" + version + "\"\n        buildPython(\"" + pythonPath + "\")\n        pip {\n            install \"-r\", \"" + requirementsPath + "\"\n        }\n    }\n    productFlavors { }\n}";
+                string addContents = "// ADD (Python4Unity)\n" +
+                    "chaquopy {\n" +
+                    "    defaultConfig {\n" +
+                    "        version \"" + version + "\"\n" +
+                    "        buildPython(\"" + pythonPath + "\")\n" +
+                    "        pip {\n";
+                foreach (string path in requirementsPaths)
+                {
+                    addContents += "            install \"-r\", \"" + Path.GetFullPath(path).Replace("\\", "/") + "\"\n";
+                }
+                addContents +=
+                    "        }\n" +
+                    "    }\n" +
+                    "    productFlavors { }\n" +
+                    "    sourceSets.getByName(\"main\") {\n" +
+                    "        srcDirs = [\n";
+                foreach (string path in srcDirs)
+                {
+                    addContents += "            \"" + Path.GetFullPath(path).Replace("\\", "/") + "\",\n";
+                }
+                addContents +=
+                    "        ]\n" +
+                    "    }\n" +
+                    "}";
                 contents = contents + "\n" + addContents;
                 File.WriteAllText("Assets/Plugins/Android/mainTemplate.gradle", contents);
             }

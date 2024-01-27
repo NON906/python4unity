@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Python4Unity_Sample/Scenes/APIExample1.unity
     guid: 7c4cf9fff8f834e478a4caba7c696760
   - enabled: 0
@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Python4Unity_Sample/Scenes/APIExample3.unity
     guid: 007a2650eac4cf145bb41a2bed9c4c8c
+  - enabled: 1
+    path: Assets/Python4Unity_Sample/Scenes/NumpyExample.unity
+    guid: 1afcc5924cf6ee341925a3a10907484b
   m_configObjects: {}
