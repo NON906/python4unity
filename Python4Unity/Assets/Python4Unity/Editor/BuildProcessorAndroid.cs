@@ -1,9 +1,11 @@
+using Python.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+using UnityEditor.Scripting.Python;
 using UnityEngine;
 
 namespace Python4Unity
@@ -17,12 +19,15 @@ namespace Python4Unity
         public void OnPreprocessBuild(BuildReport report)
         {
 #if UNITY_ANDROID
-            List<string> requirementsPaths = new List<string>();
-            string[] srcDirs = Directory.GetDirectories("Assets", "Python", SearchOption.AllDirectories);
-            foreach (string dir in srcDirs)
+            string[] srcDirs = PythonSettings.GetSitePackages();
+            string pythonPath = PythonSettings.kDefaultPython;
+            string version = "";
+            PythonRunner.EnsureInitialized();
+            using (Py.GIL())
             {
-                string[] addRequirements = Directory.GetFiles(dir, "requirements.txt", SearchOption.AllDirectories);
-                requirementsPaths.AddRange(addRequirements);
+                dynamic platform = Py.Import("platform");
+                string[] splitedVersion = ((string)platform.python_version()).Split('.');
+                version = splitedVersion[0] + "." + splitedVersion[1];
             }
 
             if (!AssetDatabase.IsValidFolder("Assets/Plugins"))
@@ -64,27 +69,27 @@ namespace Python4Unity
             {
                 contents = contents.Replace("**APPLY_PLUGINS**", "**APPLY_PLUGINS**\napply plugin: 'com.chaquo.python' // ADD (Python4Unity)");
 
-                string pythonPath = "python";
-                string version = "3.8";
                 var guids = AssetDatabase.FindAssets("t:ConfigScriptableObject");
                 if (guids.Length > 0)
                 {
                     var path = AssetDatabase.GUIDToAssetPath(guids[0]);
                     var config = AssetDatabase.LoadAssetAtPath<ConfigScriptableObject>(path);
-                    pythonPath = config.PythonPath;
-                    version = config.Version;
+                    if (!string.IsNullOrEmpty(config.PythonPath))
+                    {
+                        pythonPath = config.PythonPath;
+                    }
+                    if (!string.IsNullOrEmpty(config.Version))
+                    {
+                        version = config.Version;
+                    }
                 }
                 string addContents = "// ADD (Python4Unity)\n" +
                     "chaquopy {\n" +
                     "    defaultConfig {\n" +
                     "        version \"" + version + "\"\n" +
                     "        buildPython(\"" + Path.GetFullPath(pythonPath).Replace("\\", "/") + "\")\n" +
-                    "        pip {\n";
-                foreach (string path in requirementsPaths)
-                {
-                    addContents += "            install \"-r\", \"" + Path.GetFullPath(path).Replace("\\", "/") + "\"\n";
-                }
-                addContents +=
+                    "        pip {\n" +
+                    "            install \"-r\", \"" + Path.GetFullPath("ProjectSettings/requirements.txt").Replace("\\", "/") + "\"\n" +
                     "        }\n" +
                     "    }\n" +
                     "    productFlavors { }\n" +

@@ -7,7 +7,7 @@ namespace Python4Unity
     [CreateAssetMenu(fileName = "Python4Unity_Config", menuName = "Python4Unity/Config")]
     public class ConfigScriptableObject : ScriptableObject
     {
-        public string PythonPath = "python";
-        public string Version = "3.8";
+        public string PythonPath = "";
+        public string Version = "";
     }
 }

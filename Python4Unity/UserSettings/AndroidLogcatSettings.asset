@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "R5CT43NGWKH",
         "name": "com.DefaultCompany.Python4Unity",
-        "processId": 30045,
+        "processId": 13724,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -48,6 +48,12 @@
             "deviceId": "R5CT43NGWKH",
             "name": "com.DefaultCompany.Python4Unity",
             "processId": 30045,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CT43NGWKH",
+            "name": "com.DefaultCompany.Python4Unity",
+            "processId": 13724,
             "exited": false
         }
     ],
