@@ -2,7 +2,7 @@
     "name": "online.mumeigames.python4unity",
     "version": "0.0.1",
     "description": "Run Python on Android Unity Runtime.",
-    "displayName": "Python4Unity",
+    "displayName": "Chaquopy4Unity",
     "unity": "2022.3",
     "author": {
         "name": "NON906",
@@ -17,5 +17,8 @@
     ],
     "dependencies": {
         "com.unity.scripting.python": "7.0.1"
-    }
+    },
+    "changelogUrl": "https://github.com/NON906/python4unity/releases",
+    "documentationUrl": "https://github.com/NON906/python4unity/blob/main/README.md",
+    "licensesUrl": "https://github.com/NON906/python4unity/blob/main/LICENSE"
 }
