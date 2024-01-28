@@ -20,7 +20,7 @@ https://github.com/NON906/python4unity.git?path=Python4Unity/Assets/Python4Unity
 
 1. Player SettingsのPython Scriptingにある、Package Directoriesに以下のパス（もしくはPythonスクリプトのあるパス）を追加する
 ```
-Assets/Python4Unity_Sample/Python
+Assets/Samples/Chaquopy4Unity/0.0.1/Samples/Python
 ```
 2. ``ProjectSettings/requirements.txt``を作成し、以下の内容（もしくは使用したいライブラリ）を入力する
 ```

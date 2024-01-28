@@ -22,7 +22,7 @@ When running the sample scene NumpyExample, when using libraries such as numpy o
 
 1. Add the following path (or path with Python script) to Player Settings -> Python Scripting -> Package Directories.
 ```
-Assets/Python4Unity_Sample/Python
+Assets/Samples/Chaquopy4Unity/0.0.1/Samples/Python
 ```
 2. Create ``ProjectSettings/requirements.txt`` and enter the following content (or the library you want to use).
 ```
