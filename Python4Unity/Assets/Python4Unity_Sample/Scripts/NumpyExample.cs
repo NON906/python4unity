@@ -9,7 +9,7 @@ namespace Python4Unity.Sample
     {
         void Start()
         {
-            using var py = IPython.GetInstance();
+            using var py = PythonUtil.GetInstance();
 
             var useNumpy = py.GetModule("useNumpy");
             UnityEngine.Debug.Log(useNumpy.CallAttr<int>("getRand", 100));

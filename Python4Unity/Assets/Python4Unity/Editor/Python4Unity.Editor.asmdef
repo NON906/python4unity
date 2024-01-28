@@ -1,0 +1,19 @@
+{
+    "name": "Python4Unity.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:979b492ea2c28c14bb1c58191911d774",
+        "GUID:abd0983879a76104092bd43f426472fc"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

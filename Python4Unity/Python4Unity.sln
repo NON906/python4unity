@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Python4Unity.Editor", "Python4Unity.Editor.csproj", "{7478FCC0-1687-C160-3F73-088FC01DE070}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{AFE5FA77-53DD-79D6-D025-C3D6C340283F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{D7FA239A-03E1-4E47-0051-3FCBEBCC8EBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Python4Unity.Common", "Python4Unity.Common.csproj", "{AC14A913-B116-CADC-9703-0FD25959477C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7478FCC0-1687-C160-3F73-088FC01DE070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7478FCC0-1687-C160-3F73-088FC01DE070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7478FCC0-1687-C160-3F73-088FC01DE070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7478FCC0-1687-C160-3F73-088FC01DE070}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AFE5FA77-53DD-79D6-D025-C3D6C340283F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AFE5FA77-53DD-79D6-D025-C3D6C340283F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFE5FA77-53DD-79D6-D025-C3D6C340283F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFE5FA77-53DD-79D6-D025-C3D6C340283F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7FA239A-03E1-4E47-0051-3FCBEBCC8EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7FA239A-03E1-4E47-0051-3FCBEBCC8EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7FA239A-03E1-4E47-0051-3FCBEBCC8EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7FA239A-03E1-4E47-0051-3FCBEBCC8EBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC14A913-B116-CADC-9703-0FD25959477C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC14A913-B116-CADC-9703-0FD25959477C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC14A913-B116-CADC-9703-0FD25959477C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC14A913-B116-CADC-9703-0FD25959477C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

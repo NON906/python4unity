@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Python4Unity
 {
-    public interface IPython : IDisposable
+    public static class PythonUtil
     {
-        static IPython GetInstance()
+        public static IPython GetInstance()
         {
 #if UNITY_ANDROID
             PythonAndroid.Start();
@@ -16,8 +16,5 @@ namespace Python4Unity
             return null;
 #endif
         }
-
-        IPyObject GetModule(string name);
-        IPyObject GetBuiltins();
     }
 }

@@ -7,3 +7,5 @@
 /Python4Unity/*.csproj
 /Python4Unity/Assets/Python4Unity_Config.asset
 /Python4Unity/Assets/Python4Unity_Config.asset.meta
+__pycache__
+__pycache__.meta

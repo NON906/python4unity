@@ -9,7 +9,7 @@ namespace Python4Unity.Sample
     {
         void Start()
         {
-            using var py = IPython.GetInstance();
+            using var py = PythonUtil.GetInstance();
 
             var sys = py.GetModule("sys");
             UnityEngine.Debug.Log(sys.Get<IPyObject>("version_info").ToList<string>()[0]);
