@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Python4Unity_Sample/Scenes/APIExample2.unity
     guid: f5733fe3af39e4b4e9398856f3367579
-  - enabled: 0
+  - enabled: 1
     path: Assets/Python4Unity_Sample/Scenes/APIExample3.unity
     guid: 007a2650eac4cf145bb41a2bed9c4c8c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Python4Unity_Sample/Scenes/NumpyExample.unity
     guid: 1afcc5924cf6ee341925a3a10907484b
   m_configObjects: {}

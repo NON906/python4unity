@@ -1,0 +1,21 @@
+{
+    "name": "online.mumeigames.python4unity",
+    "version": "0.0.1",
+    "description": "Run Python on Android Unity Runtime.",
+    "displayName": "Python4Unity",
+    "unity": "2022.3",
+    "author": {
+        "name": "NON906",
+        "email": "mumeigames@gmail.com"
+    },
+    "samples": [
+        {
+            "displayName": "Samples",
+            "description": "Simple Samples.",
+            "path": "../Python4Unity_Sample"
+        }
+    ],
+    "dependencies": {
+        "com.unity.scripting.python": "7.0.1"
+    }
+}
